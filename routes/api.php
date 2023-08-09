@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ItineraryController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::group([
     Route::post('/reset-password/{token}',[AdminController::class,'resetPassword']);
     Route::group(['middleware' => ['auth:admin-api']], function () {
         Route::get("/profile",[AdminController::class,'profile']);
+        Route::get("/stats/{groupBy}",[AdminController::class,'dashboard']);
         Route::get("/logout",[AdminController::class,'logout']);
 	Route::get("/allusers",[AdminController::class,'getAllUser']);
 	Route::get("/alladmin",[AdminController::class,'getAllAdmin']);
@@ -88,6 +90,10 @@ Route::group(['middleware'=>'return-json','prefix'=>'bookings'],function(){
         Route::post('/create',[BookingController::class,'createBooking']);
         Route::post('/confirm-booking',[BookingController::class,'confirmPayment']);
     });
+});
+
+Route::group(['middleware'=>'return-json','prefix'=>'jwt'],function(){
+    Route::get("/{token}",[TokenController::class,'checkToken']);
 });
 
 

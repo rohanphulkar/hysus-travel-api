@@ -166,10 +166,12 @@ class UserController extends Controller
     }
 
 	public function destroy(string $id){
-	User::find($id)->delete();
-	return response()->json([
-	'message'=>'user deleted successfully'
-],200);
-}
+        User::find($id)->delete();
+        return response()->json([
+        'message'=>'user deleted successfully'
+    ],200);
+    }
+
+    
 
 }

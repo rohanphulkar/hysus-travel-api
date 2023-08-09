@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+
 class AdminController extends Controller
 {
     public function register(Request $request)
@@ -166,19 +168,53 @@ class AdminController extends Controller
     }
 
 	public function getAllUser(){
-    $users = User::all();
-    return response()->json($users,200);
-}
-public function getAllAdmin(){
-    $admins = Admin::all();
-    return response()->json($admins,200);
-}
+        $users = User::all();
+        return response()->json($users,200);
+    }
+    public function getAllAdmin(){
+        $admins = Admin::all();
+        return response()->json($admins,200);
+    }
 
 	public function destroy(string $id){
-	Admin::find($id)->delete();
-	return response()->json([
-	'message'=>'admin deleted successfully'
-],200);
-}
+        Admin::find($id)->delete();
+        return response()->json([
+        'message'=>'admin deleted successfully'
+    ],200);
+    }
+
+    public function getTotalBookingsForMonths($month)
+    {
+        $months = $month; // Default to 2 months
+        $year = date('Y'); // Default to current year
+
+        $currentDate = Carbon::now();
+        $dateRange = [];
+        for ($i = 0; $i < $months; $i++) {
+            $dateRange[] = $currentDate->format('Y-m');
+            $currentDate->subMonth();
+        }
+
+        $totalBookings = DB::table('bookings')
+            ->select(DB::raw("YEAR(created_at) as year"), DB::raw("MONTH(created_at) as month"), DB::raw('count(*) as count'))
+            ->whereYear('created_at', $year)
+            ->whereIn(DB::raw("DATE_FORMAT(created_at, '%Y-%m')"), $dateRange)
+            ->groupBy('year', 'month')
+            ->get();
+
+        return response()->json(['total_bookings' => $totalBookings]);
+    }
+    public function dashboard($month){
+        $totalAmounts = $this->getTotalBookingsForMonths($month);
+        $totalUsers = User::count();
+        $totalAdmins = Admin::count();
+
+        $stats = ['total_amounts'=>$totalAmounts,'total_users'=>$totalUsers,'total_admins'=>$totalAdmins];
+
+        return response()->json([
+            'message'=>'Data retrieved successfully',
+            'stats'=>$stats
+        ],200);
+    }
 
 }

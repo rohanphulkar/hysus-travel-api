@@ -6,14 +6,10 @@ use App\Models\Booking;
 use App\Models\Itinerary;
 use App\Models\Package;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Stripe\Charge;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
-use Stripe\StripeClient;
 
 class BookingController extends Controller
 {
@@ -98,7 +94,7 @@ class BookingController extends Controller
         $booking->save();
 
         // Process payment using Stripe
-        Stripe::setApiKey('sk_test_51Ncj2ASBYuAkX7FEihysDOWWpdvjvgllpuxjwj8guywdFIkiust0uYlEJUerCYdf16MaLlal9mF1975TgTWSbnow00dBMexfbB');
+        Stripe::setApiKey(config('services.stripe.secret.key'));
 
         try{
             $paymentIntent = PaymentIntent::create([
@@ -132,7 +128,7 @@ class BookingController extends Controller
             ],400);
         }
 
-        Stripe::setApiKey('sk_test_51Ncj2ASBYuAkX7FEihysDOWWpdvjvgllpuxjwj8guywdFIkiust0uYlEJUerCYdf16MaLlal9mF1975TgTWSbnow00dBMexfbB');
+        Stripe::setApiKey(config('services.stripe.secret.key'));
 
         $booking = Booking::where('payment_id',$request->payment_id)->first();
 
@@ -177,4 +173,7 @@ class BookingController extends Controller
             ], 500);
         }
     }
+
+   
+    
 }
