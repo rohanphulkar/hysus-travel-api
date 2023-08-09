@@ -45,10 +45,9 @@ class UserController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $token = auth()->guard('api')->attempt($credentials);
-
+        $user = User::where('email',$request->email)->first();
+        $token = auth()->guard('api')->attempt($credentials);
+       if ($token) {
             return response()->json([
                 'message' => 'User logged in successfully',
                 'user' => $user,
@@ -165,4 +164,12 @@ class UserController extends Controller
             'message' => 'Password changed successfully',
         ], 200);
     }
+
+	public function destroy(string $id){
+	User::find($id)->delete();
+	return response()->json([
+	'message'=>'user deleted successfully'
+],200);
+}
+
 }

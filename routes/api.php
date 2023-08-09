@@ -31,6 +31,10 @@ Route::group([
     Route::group(['middleware' => ['auth:admin-api']], function () {
         Route::get("/profile",[AdminController::class,'profile']);
         Route::get("/logout",[AdminController::class,'logout']);
+	Route::get("/allusers",[AdminController::class,'getAllUser']);
+	Route::get("/alladmin",[AdminController::class,'getAllAdmin']);
+	Route::delete("/delete/user/{id}",[UserController::class,'destroy']);
+	Route::delete("/delete/admin/{id}",[AdminController::class,'destroy']);
     });
 });
 

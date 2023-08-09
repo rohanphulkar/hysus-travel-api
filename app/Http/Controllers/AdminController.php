@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,9 +46,8 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         $user = Admin::where('email',$request->email)->first();
-        if ($user) {
-            $token = auth()->guard('admin-api')->attempt($credentials);
-
+        $token = auth()->guard('admin-api')->attempt($credentials);
+       if ($token) {
             return response()->json([
                 'message' => 'User logged in successfully',
                 'user' => $user,
@@ -164,4 +164,21 @@ class AdminController extends Controller
             'message' => 'Password changed successfully',
         ], 200);
     }
+
+	public function getAllUser(){
+    $users = User::all();
+    return response()->json($users,200);
+}
+public function getAllAdmin(){
+    $admins = Admin::all();
+    return response()->json($admins,200);
+}
+
+	public function destroy(string $id){
+	Admin::find($id)->delete();
+	return response()->json([
+	'message'=>'admin deleted successfully'
+],200);
+}
+
 }
