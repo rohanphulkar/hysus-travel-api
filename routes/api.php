@@ -53,7 +53,7 @@ Route::group([
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get("/profile",[UserController::class,'profile']);
         Route::get("/logout",[UserController::class,'logout']);
-		Route::post("/change-password",[AuthController,'changePassword']);
+		Route::post("/change-password",[AuthController::class,'changePassword']);
     });
 });
 
