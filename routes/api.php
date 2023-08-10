@@ -33,7 +33,7 @@ Route::group([
         Route::get("/profile",[AdminController::class,'profile']);
         Route::get("/stats/{groupBy}",[AdminController::class,'dashboard']);
         Route::get("/logout",[AdminController::class,'logout']);
-		Route::post("/change-password",[AuthController:::class,'changePassword']);
+		Route::post("/change-password",[AuthController::class,'changePassword']);
 	Route::get("/allusers",[AdminController::class,'getAllUser']);
 	Route::get("/alladmin",[AdminController::class,'getAllAdmin']);
 	Route::delete("/delete/user/{id}",[UserController::class,'destroy']);
