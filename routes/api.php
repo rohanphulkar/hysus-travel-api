@@ -70,13 +70,13 @@ Route::group(['middleware'=>'return-json','prefix'=>'packages'],function(){
 
 Route::group(['middleware'=>'return-json','prefix'=>'itineraries'],function(){
     Route::get("/",[ItineraryController::class,'index']);
-    Route::get("/{id}",[PackageController::class,'getItineraryById']);
-    Route::get("/booking/{id}",[PackageController::class,'getItineraryByBookingId']);
+    Route::get("/{id}",[ItineraryController::class,'getItineraryById']);
+    Route::get("/booking/{id}",[ItineraryController::class,'getItineraryByBookingId']);
     Route::group(['middleware' => ['auth:admin-api']], function () {
-        Route::delete("/{id}",[PackageController::class,'destroy']);
+        Route::delete("/{id}",[ItineraryController::class,'destroy']);
     });
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::get("/user",[PackageController::class,'getItineraryByUser']);
+        Route::get("/user",[ItineraryController::class,'getItineraryByUser']);
     });
 });
 Route::group(['middleware'=>'return-json','prefix'=>'bookings'],function(){
@@ -98,4 +98,12 @@ Route::group(['middleware'=>'return-json','prefix'=>'jwt'],function(){
     Route::post("/check",[TokenController::class,'checkToken']);
 });
 
-
+Route::group(['middleware'=>'return-json','prefix'=>'adimages'],function(){
+    Route::get("/",[AdImageController::class,'index']);
+	Route::get("/{id}",[AdImageController::class,'show']);
+    Route::group(['middleware' => ['auth:admin-api']], function () {
+        Route::post("/",[AdImageController::class,'store']);
+		Route::post("/{id}",[AdImageController::class,'update']);
+		Route::delete("/{id}",[AdImageController::class,'destroy']);
+    });
+});
