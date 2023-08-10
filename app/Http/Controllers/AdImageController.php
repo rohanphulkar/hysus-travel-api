@@ -36,8 +36,8 @@ class AdImageController extends Controller
 
         return response()->json([
             'message'=>'image has been added',
-            'images'=>$adimage
-        ],200);
+            'images'=>$adimage,
+			'domain'=>$request()->getHttpHost();
     }
 
     /**
