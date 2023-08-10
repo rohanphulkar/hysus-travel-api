@@ -93,7 +93,7 @@ Route::group(['middleware'=>'return-json','prefix'=>'bookings'],function(){
 });
 
 Route::group(['middleware'=>'return-json','prefix'=>'jwt'],function(){
-    Route::get("/{token}",[TokenController::class,'checkToken']);
+    Route::get("/check",[TokenController::class,'checkToken']);
 });
 
 
