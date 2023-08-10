@@ -15,7 +15,9 @@ class AdImageController extends Controller
     {
         //
         $images = AdImage::all();
-        return response()->json($images,200);
+		$host = request()->getSchemeAndHttpHost();
+        return response()->json(['images'=>$images,'domain'=>$host
+],200);
     }
 
    
@@ -36,8 +38,8 @@ class AdImageController extends Controller
 
         return response()->json([
             'message'=>'image has been added',
-            'images'=>$adimage,
-			'domain'=>$request()->getHttpHost();
+            'images'=>$adimage
+        ],200);
     }
 
     /**
