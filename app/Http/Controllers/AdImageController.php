@@ -17,7 +17,7 @@ class AdImageController extends Controller
         $images = AdImage::all();
 		$host = request()->getSchemeAndHttpHost();
 		$imagePath = $host . '/adimages/';
-        return response()->json(['images'=>$images,'domain'=>$imagePath
+        return response()->json(['images'=>$images,'imagePath'=>$imagePath
 ],200);
     }
 
