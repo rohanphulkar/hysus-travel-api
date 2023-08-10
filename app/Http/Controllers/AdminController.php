@@ -151,7 +151,7 @@ class AdminController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $user = $request->user();
+        $user = auth()->user();
 
         if (!Hash::check($request->input('current_password'), $user->password)) {
             return response()->json([
