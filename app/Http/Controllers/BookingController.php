@@ -135,7 +135,7 @@ class BookingController extends Controller
 				'package_id'=>$booking->package_id,
 				'booking_id'=>$booking->id,
 				'user_id'=>$booking->user_id,
-				'date_of_itinerary'=>now()
+				'date_of_itinerary'=>Carbon::today(),
 				]);
 				$booking->payment_status = 'success';
 				$booking->save();
