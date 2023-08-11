@@ -123,7 +123,7 @@ class BookingController extends Controller
     {
         $paymentIntentId = $request->payment_id; // Assuming you pass the payment intent ID from the client
 
-        Stripe::setApiKey(config('services.stripe.secret'));
+        Stripe::setApiKey('sk_test_51Ncj2ASBYuAkX7FEihysDOWWpdvjvgllpuxjwj8guywdFIkiust0uYlEJUerCYdf16MaLlal9mF1975TgTWSbnow00dBMexfbB');
 
         try {
             $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
