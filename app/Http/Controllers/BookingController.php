@@ -42,7 +42,8 @@ class BookingController extends Controller
 
     public function getBookingsOfUser(){
         $user = auth()->user()->id;
-        $bookings = Booking::where('user_id',$user);
+		
+        $bookings = Booking::where('user_id',$user)->get();
         return response()->json([
             'message'=>'Bookings retrieved successfully',
             'bookings'=>$bookings
