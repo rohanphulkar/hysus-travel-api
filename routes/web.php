@@ -14,3 +14,4 @@ use Inertia\Inertia;
 */
 
 
+Route::view('/docs','swagger');
