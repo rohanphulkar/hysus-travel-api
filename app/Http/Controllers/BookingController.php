@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
 use Stripe\StripeClient;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -134,7 +135,7 @@ class BookingController extends Controller
 				'package_id'=>$booking->package_id,
 				'booking_id'=>$booking->id,
 				'user_id'=>$booking->user_id,
-				'date_of_itinerary'=>Carbon\Carbon::now()
+				'date_of_itinerary'=>now()
 				]);
 				$booking->payment_status = 'success';
 				$booking->save();
