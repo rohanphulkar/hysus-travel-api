@@ -136,11 +136,15 @@ class BookingController extends Controller
 				'user_id'=>$booking->user_id,
 				'date_of_itinerary'=>Carbon\Carbon::now()
 				]);
+				$booking->payment_status = 'success';
+				$booking->save();
                 return response()->json([
                     'message' => 'Payment was successful',
                     'payment_intent' => $paymentIntent,
                 ], 200);
             } else {
+				$booking->payment_status = 'failed';
+				$booking->save();
                 return response()->json([
                     'message' => 'Payment was not successful',
                     'payment_intent' => $paymentIntent,
