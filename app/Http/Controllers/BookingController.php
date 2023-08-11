@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Itinerary;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,6 +115,40 @@ class BookingController extends Controller
         }catch(\Exception $e){
             return response()->json([
                 'message' => 'Payment processing failed',
+            ], 500);
+        }
+    }
+	
+	public function checkPaymentStatus(Request $request)
+    {
+        $paymentIntentId = $request->payment_id; // Assuming you pass the payment intent ID from the client
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+			$booking = Booking::where('payment_id',$paymentIntent->id)->first();
+			
+            if ($paymentIntent->status === 'succeeded') {
+				$itinerary = Itinerary::create([
+				'package_id'=>$booking->package_id,
+				'booking_id'=>$booking->id,
+				'user_id'=>$booking->user_id,
+				'date_of_itinerary'=>Carbon\Carbon::now()
+				]);
+                return response()->json([
+                    'message' => 'Payment was successful',
+                    'payment_intent' => $paymentIntent,
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Payment was not successful',
+                    'payment_intent' => $paymentIntent,
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error checking payment status',
             ], 500);
         }
     }
