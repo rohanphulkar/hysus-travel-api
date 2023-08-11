@@ -103,6 +103,9 @@ class BookingController extends Controller
                 'amount'=>($booking->total_amount*1/2)*100,
                 'currency'=>'inr'
             ]);
+			
+			$booking->payment_id = $paymentIntent->id;
+			$booking->save();
 
             $output = [
                 'clientSecret' => $paymentIntent->client_secret,
