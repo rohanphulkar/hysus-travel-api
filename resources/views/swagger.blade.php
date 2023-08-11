@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="swagger-api"></div>
-        <script src="{{ route('resource_route', ['filename' => 'swagger.js']) }}"></script>
+        <script type="text/javascript" src="{{ route('resource_route', ['filename' => 'swagger.js']) }}"></script>
         @vite("resources/js/swagger.js")
     </body>
 </html>
