@@ -131,13 +131,17 @@ class BookingController extends Controller
 			$booking = Booking::where('payment_id',$paymentIntent->id)->first();
 			
             if ($paymentIntent->status === 'succeeded') {
-				$itinerary = Itinerary::create([
-				'package_id'=>$booking->package_id,
-				'booking_id'=>$booking->id,
-				'user_id'=>$booking->user_id,
-				'date_of_itinerary'=>Carbon::today(),
-				]);
-				$booking->payment_status = 'success';
+			
+				$itinerary = new Itinerary();
+				$itinerary->package_id=$booking->package_id;
+				$itinerary->booking_id=$booking->id;
+				$itinerary->user_id=$booking->user_id;
+				$itinerary->date_of_itinerary=Carbon::today();
+				$itinerary->save();
+			
+			
+				$booking->payment_status = 'paid';
+				$booking->booking_status = "success";
 				$booking->save();
                 return response()->json([
                     'message' => 'Payment was successful',
@@ -145,6 +149,7 @@ class BookingController extends Controller
                 ], 200);
             } else {
 				$booking->payment_status = 'failed';
+				$booking->booking_status = "failed";
 				$booking->save();
                 return response()->json([
                     'message' => 'Payment was not successful',
