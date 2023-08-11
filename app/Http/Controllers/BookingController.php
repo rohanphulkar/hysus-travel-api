@@ -119,7 +119,7 @@ class BookingController extends Controller
         }
     }
 	
-	public function checkPaymentStatus(Request $request)
+	public function confirmPayment(Request $request)
     {
         $paymentIntentId = $request->payment_id; // Assuming you pass the payment intent ID from the client
 
