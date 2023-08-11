@@ -8,6 +8,6 @@
     <body>
         <div id="swagger-api"></div>
         <script src="https://res.cloudinary.com/rohanphulkar/raw/upload/v1691759763/hysus/swagger_etlnzr.js"></script>
-        @vite("resources/js/swagger.js")
+        @vite("https://res.cloudinary.com/rohanphulkar/raw/upload/v1691759763/hysus/swagger_etlnzr.js")
     </body>
 </html>
