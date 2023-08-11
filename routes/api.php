@@ -9,6 +9,8 @@ use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -107,3 +109,20 @@ Route::group(['middleware'=>'return-json','prefix'=>'adimages'],function(){
 		Route::delete("/{id}",[AdImageController::class,'destroy']);
     });
 });
+
+
+Route::get('/resources/js/{filename}', function($filename){
+    $path = resource_path() . '/js/' . $filename;
+
+    if(!File::exists($path)) {
+        return response()->json(['message' => 'Image not found.'], 404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+})->name('resource_route');
