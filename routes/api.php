@@ -87,7 +87,7 @@ Route::group(['middleware'=>'return-json','prefix'=>'bookings'],function(){
         Route::get("/package/{id}",[BookingController::class,'getBookingsByPackage']);
     });
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::get("/user",[BookingController::class,'getBookingsOfUser']);
+        Route::get("/user/booking",[BookingController::class,'getBookingsOfUser']);
         Route::get("/cancel/{id}",[BookingController::class,'cancelBooking']);
         Route::post('/create',[BookingController::class,'createBooking']);
         Route::post('/confirm-booking',[BookingController::class,'confirmPayment']);
