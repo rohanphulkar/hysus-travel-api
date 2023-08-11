@@ -154,6 +154,7 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error checking payment status',
+				'error'=>json_encode($e)
             ], 500);
         }
     }
