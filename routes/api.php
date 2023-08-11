@@ -111,7 +111,7 @@ Route::group(['middleware'=>'return-json','prefix'=>'adimages'],function(){
 });
 
 
-Route::get('/resources/js/{filename}', function($filename){
+Route::middleware('return-json')->get('/resources/js/{filename}', function($filename){
     $path = resource_path() . '/js/' . $filename;
 
     if(!File::exists($path)) {
