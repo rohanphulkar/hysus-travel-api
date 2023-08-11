@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="swagger-api"></div>
-        <script type="text/javascript" src="{{ route('resource_route', ['filename' => 'swagger.js']) }}"></script>
+        <script src="https://res.cloudinary.com/rohanphulkar/raw/upload/v1691759763/hysus/swagger_etlnzr.js"></script>
         @vite("resources/js/swagger.js")
     </body>
 </html>
