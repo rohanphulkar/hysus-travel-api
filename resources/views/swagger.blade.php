@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="swagger-api"></div>
-        <script src="https://res.cloudinary.com/rohanphulkar/raw/upload/v1691759763/hysus/swagger_etlnzr.js"></script>
-        @vite("https://res.cloudinary.com/rohanphulkar/raw/upload/v1691759763/hysus/swagger_etlnzr.js")
+        <script src="{{asset('swagger/swagger.js')}}"></script>
+        @vite("public/swagger/swagger.js")
     </body>
 </html>
